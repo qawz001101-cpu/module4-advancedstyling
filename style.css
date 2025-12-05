@@ -1,0 +1,146 @@
+/* ================================================= */
+/* 1. MOBILE-FIRST (CSS CHUNG) */
+/* ================================================= */
+html{
+    /* Tùy chọn mặc định cho cuộn mượt (sẽ bị ghi đè) */
+    scroll-behavior: smooth; 
+}
+body {
+    background-color: #dedede; /* Mặc định: Nền sáng */
+    padding: 5px;
+    margin: 15px;
+    font-size: 25px;
+    font-family:Arial, sans-serif;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    font-family:Arial, sans-serif;
+    font-size: 1.95em;
+}
+
+h2{
+    text-align:center;
+}
+
+li{
+    margin-top: 20px;
+}
+
+img{
+    border: 5px solid #007bff; /* Viền xanh mặc định */
+    border-radius: 35px;
+    width: 100%;
+}
+
+figure {
+    background-color: #ffffff; /* Nền figure mặc định: Trắng */
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+}
+
+.label{
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* MOBILE VIEW: Lưới một cột và Khoảng cách 10px */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 cột */
+    gap: 10px; /* Khoảng cách 10px */
+}
+
+/* ================================================= */
+/* 2. MEDIA QUERY #1: TABLET VIEW (min-width: 772px) */
+/* Bố cục 2 cột, hình tròn, figure cuối chiếm 2 cột */
+/* ================================================= */
+@media screen and (min-width: 772px) {
+    
+    /* Bố cục 2 cột (Ghi đè Mobile View) */
+    .grid {
+        grid-template-columns: 1fr 1fr; 
+    }
+    
+    /* Tạo hình tròn trên figure */
+    figure img {
+        /* Đã có sẵn width: 100% trong CSS chung, 50% sẽ làm nó tròn */
+        border-radius: 50%; 
+        width: 80%; /* Giảm kích thước ảnh để dễ tạo hình tròn hơn */
+        display: block;
+        margin: 0 auto;
+    }
+    
+    /* Figure cuối cùng chiếm cả 2 cột */
+    .grid figure:last-child {
+        grid-column: 1 / span 2; 
+    }
+}
+
+/* ================================================= */
+/* 3. MEDIA QUERY #2: LARGE SCREEN VIEW (min-width: 992px) */
+/* Bố cục 3 cột, loại bỏ border-radius, figure thứ 3 chiếm 2 cột */
+/* KHÔNG DÙNG max-width */
+/* ================================================= */
+@media screen and (min-width: 992px) {
+    
+    /* Bố cục 3 cột (Ghi đè Tablet View) */
+    .grid {
+        grid-template-columns: 1fr 1fr 1fr; 
+        /* Không cần lặp lại gap, display: grid */
+    }
+
+    /* Loại bỏ border-radius (Hình vuông) */
+    figure img {
+        border-radius: 0; /* Ghi đè 50% */
+        width: 100%; /* Trở lại 100% chiều rộng figure */
+        margin: 0;
+    }
+    
+    /* Figure cuối cùng (được thiết lập ở Tablet View) phải bị hủy bỏ quy tắc span */
+    .grid figure:last-child {
+        grid-column: auto;
+    }
+    
+    /* Thiết lập mọi figure thứ ba chiếm 2 cột */
+    .grid figure:nth-child(3n) {
+        grid-column: 1 / span 2; 
+    }
+}
+
+/* ================================================= */
+/* 4. MEDIA QUERY #3: PREFERS-REDUCED-MOTION */
+/* Loại bỏ cuộn mượt */
+/* ================================================= */
+@media (prefers-reduced-motion) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ================================================= */
+/* 5. MEDIA QUERY #4: PREFERS-COLOR-SCHEME: DARK */
+/* Chế độ tối */
+/* ================================================= */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212; /* Nền tối */
+        color: #e0e0e0; /* Chữ sáng */
+    }
+    
+    figure {
+        background-color: #333333; /* Nền Figure tối */
+        color: #fffb00; /* Chữ màu vàng nhạt (yellow-ish) */
+        border-color: #000000; /* Viền đen */
+    }
+    
+    img {
+        border-color: #000000; /* Viền ảnh đen */
+    }
+    
+    a {
+        color: #90ee90; /* Link màu xanh lá cây nhạt trên nền tối */
+    }
+}
